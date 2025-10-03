@@ -1,27 +1,27 @@
-¡De acuerdo! No te generaré una tabla. Mantendremos el enfoque en el Agente de Triage Clínico y Protocolos Dinámicos utilizando LangGraph, LangChain, MCP, Gemini API, y MongoDB, pero presentando la información de forma narrativa.
+Aquí tienes el mismo texto con un diseño mejorado en Markdown para un README.md, usando negritas, citas, código inline y una estructura visual más clara, sin alterar el contenido.
 
-Caso de Estudio: Agente de Triage Clínico y Protocolos Dinámicos (Solo Texto) 🩺
-Este ejercicio práctico está diseñado para que los participantes construyan un Agente de Decisión Médica avanzado que va más allá de un simple chatbot. Se centra en la orquestación compleja y la integración de sistemas distribuidos a través de MCP, con MongoDB como base de datos de protocolos.
+🩺 Agente de Triage Clínico y Protocolos Dinámicos (Solo Texto)
+Este ejercicio práctico está diseñado para que los participantes construyan un Agente de Decisión Médica avanzado que va más allá de un simple chatbot. Se centra en la orquestación compleja y la integración de sistemas distribuidos a través del Model Context Protocol (MCP), con MongoDB como base de datos de protocolos de referencia.
 
 📝 Escenario del Problema
-La clínica "Salud Conectada" necesita un asistente automatizado que pueda interactuar con los pacientes a través de texto para evaluar sus síntomas. El objetivo primordial es determinar la gravedad de la situación y activar un protocolo de respuesta basado en datos internos (MongoDB) y en la disponibilidad de recursos externos (Servicio MCP).
+La clínica "Salud Conectada" necesita un asistente automatizado que pueda interactuar con los pacientes a través de texto para evaluar sus síntomas. El objetivo primordial es determinar la gravedad de la situación y activar un protocolo de respuesta basado en datos internos (MongoDB) y en la disponibilidad de recursos externos (Servicio MCP simulado).
 
 🛠️ Flujo de Trabajo del Agente (Orquestado con LangGraph)
 El corazón de la solución es un grafo (LangGraph) que gestiona cuatro nodos clave de forma condicional, utilizando Gemini para el razonamiento y LangChain como interfaz para las herramientas.
 
 1. Clasificación Inicial (Nodo: Clasificacion_Inicial)
-El agente recibe la descripción de los síntomas del paciente (ej: "Tengo un dolor agudo en el pecho y me cuesta respirar").
+Entrada: El agente recibe la descripción de los síntomas del paciente (ej: "Tengo un dolor agudo en el pecho y me cuesta respirar").
 
 Gemini API se usa para analizar y clasificar la situación en una de tres categorías de gravedad: "Baja", "Moderada", o "Crítica".
 
-Decisión: Si la gravedad es "Baja", el flujo termina rápidamente en la recomendación simple. Si es "Moderada" o "Crítica", la complejidad aumenta y el agente transiciona al siguiente paso de validación de protocolos.
+Decisión: Si la gravedad es "Baja", el flujo termina rápidamente. Si es "Moderada" o "Crítica", el agente transiciona al siguiente paso de validación.
 
 2. Consulta y Validación de Protocolo (Nodo: Consulta_Protocolo_MongoDB)
 Este nodo se activa para casos no-triviales.
 
-Herramienta LangChain: Se utiliza una herramienta LangChain para conectarse a MongoDB. La herramienta extrae el protocolo de triage más relevante basado en los síntomas clave identificados por Gemini.
+Herramienta LangChain + MongoDB: Se utiliza una Tool de LangChain para conectarse a MongoDB. La herramienta extrae el protocolo de triage más relevante basado en los síntomas clave identificados por Gemini.
 
-Lógica en MongoDB: El agente no solo lee, sino que también verifica los síntomas del paciente contra los criterios_de_alerta definidos en el documento de protocolo de MongoDB.
+Lógica en MongoDB: El agente no solo lee, sino que también verifica los síntomas del paciente contra los criterios_de_alerta definidos en el documento de protocolo.
 
 Resultado de Salida: La herramienta devuelve el texto del protocolo y un flag booleano de "Alerta Máxima" (True/False). Este flag impulsa la siguiente decisión de LangGraph.
 
@@ -30,14 +30,14 @@ Este nodo solo se ejecuta si el flag de "Alerta Máxima" de la base de datos es 
 
 Model Context Protocol (MCP): El agente llama a un servicio externo (simulado) utilizando el protocolo MCP. Los capacitantes deben definir el esquema de la herramienta obtener_disponibilidad_ambulancia.
 
-Función del MCP: Este servicio (independiente del agente) devuelve información crítica en tiempo real, como el Tiempo de Despacho Estimado (TDE) de una ambulancia o el tiempo de espera en la sala de emergencias.
+Función del MCP: Este servicio devuelve información crítica en tiempo real, como el Tiempo de Despacho Estimado (TDE).
 
-El uso de MCP demuestra cómo el agente se conecta de manera estandarizada a un sistema empresarial vital para la operación.
+💡 El uso de MCP demuestra cómo el agente se conecta de manera estandarizada a un sistema empresarial vital para la operación.
 
 4. Generación de Recomendación Final (Nodo: Generar_Recomendacion)
 El agente usa Gemini para sintetizar toda la información y generar una respuesta empática y precisa.
 
-Respuesta Baja: Si fue clasificado como "Baja", ofrece consejos de autocuidado.
+Respuesta Baja: Ofrece consejos de autocuidado.
 
 Respuesta Moderada: Combina el diagnóstico de Gemini con el Protocolo de Triage obtenido de MongoDB.
 
